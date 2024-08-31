@@ -23,7 +23,7 @@ from job_management_system import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('clientuser/',include("clientUser.urls")),
-    path('jobs/',include("jobs.urls")),
+    path('jobs/',include("JobCircular.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
