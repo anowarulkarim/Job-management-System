@@ -1,0 +1,13 @@
+{% extends "clientUser/layout.html" %}
+{% block body %}
+<h1>LOG IN</h1>
+<form action="{% url 'client_user:login' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+<a href="{% url 'client_user:signup' %}">signup</a>
+{% if message %}
+    <h2> {{message}} </h2>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "clientUser/layout.html" %}
+{% block body %}
+    {% if message %}
+        <h2>{{ message }}</h2>
+    {% endif %}
+    <form action="{% url 'client_user:signup' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="password">Confirm Password</label>
+    <input type="password" name="password2">
+    <input type="submit">
+    </form>
+{% endblock %}
