@@ -1,6 +1,8 @@
 {% extends "clientUser/layout.html" %}
 {% block body %}
-    <p>all the jobs are here
-        
-    </p>
+    <h1>Find Job From Here</h1>
+        {% for i in all_jobs %}
+            <p>{{ i }}</p>
+        {% endfor %}
+    
 {% endblock %}

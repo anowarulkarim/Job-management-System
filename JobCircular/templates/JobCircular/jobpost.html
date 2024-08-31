@@ -1,0 +1,9 @@
+{% extends "clientUser/layout.html" %}
+{% block body %}
+<h1>Give Informations</h1>
+<form action="{% url 'client_user:login' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+{% endblock %}
