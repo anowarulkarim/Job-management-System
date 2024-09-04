@@ -1,0 +1,10 @@
+{% extends "clientUser/layout.html" %}
+{% block body %}
+<h1>Give Informations</h1>
+<form action="{% url 'jobs:recruterlogin' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+<a href="{% url 'jobs:recrutersignup' %}">Signup</a>
+{% endblock %}
