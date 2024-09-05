@@ -7,4 +7,7 @@
     <input type="submit">
 </form>
 <a href="{% url 'jobs:recrutersignup' %}">Signup</a>
+{% if error %}
+    {{ error }}
+{% endif %}
 {% endblock %}

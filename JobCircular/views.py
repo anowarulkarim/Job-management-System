@@ -14,7 +14,7 @@ class recrutersignup(forms.Form):
     password2=forms.CharField(max_length=20)
 class recruterlogin(forms.Form):
     username=forms.CharField(max_length=20)
-    pasword=forms.CharField(max_length=20)
+    password=forms.CharField(max_length=20)
 class job(forms.Form):
     titel=forms.CharField(max_length=50)
     salary=forms.IntegerField()
@@ -28,9 +28,26 @@ def alljobs(request):
         else:
             return redirect(reverse('client_user:login'))
 def postjob(request):
-    return render(request,"JobCircular/jobpost.html",{
-        "form":job()
-    })
+    if request.method=="POST":
+        job_form=job(request.POST)
+        if job_form.is_valid():
+            job_recruter=Recruter.objects.get(username=request.session.get("recruter"))
+            print(job_recruter)
+            new_circular=Circular(
+                recruter=job_recruter,
+                company=job_recruter.company,
+                titel=job_form.cleaned_data["titel"],
+                salary=job_form.cleaned_data["salary"],
+                last_date=job_form.cleaned_data["last_date"]
+            )
+            new_circular.save()
+                
+    if request.session.get("recruter")!=None:
+        return render(request,"JobCircular/jobpost.html",{
+            "form":job()
+        })
+    else:
+        return redirect(reverse('jobs:recruterlogin'))
 def recruterLogin(request):
     if request.method=="POST":
         login_form=recruterlogin(request.POST)
@@ -41,7 +58,17 @@ def recruterLogin(request):
                 password=login_form.cleaned_data["password"]
                 if check_password(password, recruter.password):
                     request.session["recruter"]=recruter.username
-                    return redirect(reverse())
+                    return redirect(reverse('jobs:recruterhome'))
+                else:
+                    return render(request,"JObCircular/recruterlogin.html",{
+                        "form":login_form,
+                        "error":"Wrong password"
+                    })
+            else:
+                return render(request,"JObCircular/recruterlogin.html",{
+                    "form":login_form,
+                    "error":"User Does Not exist"
+                })
 
     return render(request,"JObCircular/recruterlogin.html",{
         "form":recruterlogin()
