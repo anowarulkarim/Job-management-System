@@ -2,7 +2,9 @@
 {% block body %}
     <h1>Find Job From Here</h1>
         {% for i in all_jobs %}
-            <p>{{ i }}</p>
+        <p>
+            {{ i }}
+            <a href="{% url 'jobs:apply_job' i.id %}">Apply Now</a>
+        </p>
         {% endfor %}
-    
 {% endblock %}

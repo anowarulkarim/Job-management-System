@@ -27,6 +27,10 @@ def alljobs(request):
         })
         else:
             return redirect(reverse('client_user:login'))
+def apply_job(requet,job_id):
+    print(job_id)
+    return(HttpResponse("asdkfjlakdsfj"))
+
 def postjob(request):
     if request.method=="POST":
         job_form=job(request.POST)
@@ -104,6 +108,13 @@ def recruterSignup(request):
         return render(request,"JobCircular/recrutersignup.html",{
             "form":recrutersignup()
         })
+def recruterlogout(request):
+    if request.session.get("recruter"):
+        del request.session["recruter"]
+
+    return redirect(reverse('jobs:recruterlogin'))
+
+
 def recruterhome(request):
     if request.session.get("recruter")!=None:
         return render(request,"JobCircular/recruterhome.html")
